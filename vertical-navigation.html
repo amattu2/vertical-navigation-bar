@@ -1,0 +1,481 @@
+<html>
+	<head>
+		<title>Vertical Navigation Design</title>
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<style>
+			/* base */
+			html, body {
+				font-family: sans-serif;
+				margin: 0;
+				padding: 0;
+			}
+
+			/* index.css */
+			.sidebar {
+				position: fixed;
+				width: 240px;
+				height: 100%;
+				z-index: 1009;
+				user-select: none;
+				-webkit-user-drag: none;
+				box-shadow: 1px 0 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
+				background: #262c2f;
+				color: #f2f2f2;
+				transition: background 0s ease;
+			}
+
+			.sidebar .sidebar-menu {
+				display: none;
+			}
+
+			.sidebar-top {
+				padding: 21px 18px;
+				margin-bottom: 9px;
+				transition: padding 0.1s ease;
+			}
+
+			.sidebar-top-logo {
+				display: flex;
+				align-items: center;
+				margin-bottom: 7px;
+			}
+
+			.sidebar-top-text {
+				opacity: 0.6;
+				font-size: 15px;
+			}
+
+			.sidebar-top-logo img {
+				margin-right: 10px;
+				border-radius: 4px;
+			}
+
+			.sidebar-top-logo h3 {
+				font-size: 18px;
+				margin: 0;
+			}
+
+			.sidebar-menu-back {
+				display: none;
+				opacity: 1;
+				margin-top: 19px;
+				cursor: pointer;
+				transition: opacity 0.1s ease;
+			}
+
+			.sidebar-menu-back:hover {
+				opacity: 0.6;
+			}
+
+			.sidebar-links .sidebar-link {
+				display: flex;
+				align-items: center;
+				transition: background 0.1s ease, border 0.1s ease;
+				border-left: 5px solid transparent;
+				padding: 13px 0;
+				padding-left: 15px;
+				margin: 3px 0;
+			}
+
+			.sidebar-links .sidebar-link.no-margin {
+				margin: 0;
+			}
+
+			.sidebar-links .sidebar-link:hover {
+				cursor: pointer;
+				background: rgba(0, 0, 0, 0.10);
+			}
+
+			.sidebar-links .sidebar-link.active {
+				background: rgba(255, 255, 255, 0.15);
+				border-left-color: #FFC107;
+			}
+
+			.sidebar-link .sidebar-link-icon {
+				width: 41px;
+			}
+
+			.sidebar-link .sidebar-link-icon .material-icons {
+				font-size: 21px;
+			}
+
+			.sidebar-link .sidebar-link-text {
+				opacity: 0.95;
+			}
+
+			.sidebar-link-subtitle {
+				margin-top: 17px;
+				margin-bottom: 10px;
+				margin-left: 20px;
+				font-weight: bold;
+				text-transform: uppercase;
+				opacity: 0.3;
+				font-size: 13px;
+			}
+
+			.sidebar-bottom {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				padding: 0 22px;
+				padding-bottom: 18px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.sidebar-bottom .sidebar-account-icon {
+				margin: 0px 7px;
+				position: relative;
+			}
+
+			.sidebar-bottom .sidebar-account-icon img {
+				border-radius: 50%;
+				padding: 2px;
+				background: #fff;
+				width: 32px;
+				height: auto;
+			}
+
+			.sidebar-bottom .sidebar-account-line {
+				height: 25px;
+				width: 1px;
+				background: rgba(255, 255, 255, 0.1);
+				margin: 0px 4px;
+			}
+
+			.sidebar-account-icon .sidebar-account-details {
+				margin-left: 9px;
+			}
+
+			.sidebar-account-name {
+				font-size: 13px;
+				opacity: 0.5;
+				margin: 0;
+				margin-bottom: 3px;
+				white-space: pre;
+			}
+
+			.sidebar-account-title {
+				font-size: 12px;
+				opacity: 0.4;
+			}
+
+			.sidebar-account-tabs {
+				display: none;
+				position: fixed;
+				padding: 11px 10px;
+				border-radius: 3px;
+				background: #fff;
+				color: #3b3b3b;
+				width: 195px;
+				left: 11px;
+				bottom: 61px;
+				box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+			}
+
+			.sidebar-account-tabs.active {
+				display: block;
+			}
+
+			.sidebar-account-tabs::after {
+				top: 100%;
+				left: 41%;
+				border: solid transparent;
+				content: " ";
+				height: 0;
+				width: 0;
+				position: absolute;
+				pointer-events: none;
+				border-color: rgba(255, 255, 255, 0);
+				border-top-color: #fff;
+				border-width: 6px;
+				margin-left: -6px;
+			}
+
+			.sidebar-account-tabs .sidebar-account-tab {
+				padding: 10px;
+				cursor: pointer;
+				transition: background 0.1s ease;
+				border-radius: 3px;
+			}
+
+			.sidebar-account-tabs .sidebar-account-tab:hover {
+				background: rgba(0, 0, 0, 0.05);
+			}
+
+			.sidebar-account-tabs .sidebar-account-tab-line {
+				height: 1px;
+				background: rgba(0, 0, 0, 0.1);
+				margin: 2px 6px;
+			}
+
+			.sidebar-menu .menu-top {
+				padding: 21px 9px;
+				padding-bottom: 12px;
+			}
+
+			.menu-top-text {
+				opacity: 0.6;
+				font-size: 15px;
+			}
+
+			.menu-top-logo h3 {
+				font-size: 18px;
+				margin: 0;
+				margin-bottom: 3px;
+				font-weight: 300;
+			}
+
+			.menu-top-line {
+				height: 1px;
+				background: rgba(255, 255, 255, 0.4);
+				margin: 24px 3px;
+				margin-bottom: 0px;
+			}
+
+			.menu-link {
+				display: flex;
+				align-items: center;
+				transition: background 0.1s ease;
+				padding: 8px 0;
+				padding-left: 15px;
+				margin: 3px 0;
+				opacity: 0.8;
+			}
+
+			.menu-link:hover {
+				cursor: pointer;
+				background: rgba(0, 0, 0, 0.10);
+			}
+
+			/* Sidebar Toggled CSS */
+			.sidebar.menu-toggled .sidebar-links, .sidebar.menu-toggled .sidebar-top-text, .sidebar.menu-toggled .sidebar-top-logo h3, .sidebar.menu-toggled .sidebar-bottom {
+				display: none;
+			}
+
+			.sidebar.menu-toggled .sidebar-menu-back {
+				display: block;
+			}
+
+			.sidebar.menu-toggled .sidebar-top {
+				padding: 23px 9px;
+			}
+
+			.sidebar.menu-toggled .sidebar-menu {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				background: rgba(255, 255, 255, 0.05);
+				right: 0;
+				left: 53px;
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<div class='sidebar' id='sidebar'>
+			<!-- Top -->
+			<div class='sidebar-top'>
+				<div class='sidebar-top-logo'>
+					<img src='https://via.placeholder.com/32x32' />
+					<h3>Application Name</h3>
+				</div>
+				<div class='sidebar-top-text'>
+					<span>Beta Access</span>
+				</div>
+				<div class='sidebar-menu-back' id='sidebar-menu-back'>
+					<i class="material-icons">arrow_back</i>
+				</div>
+			</div>
+
+			<!-- Links -->
+			<div class='sidebar-links'>
+				<!-- Pages -->
+				<div class='sidebar-link-subtitle'>
+					<span>Available Pages</span>
+				</div>
+				<div class='sidebar-link active' data-target="dashboard.html">
+					<div class='sidebar-link-icon'>
+						<i class="material-icons">dashboard</i>
+					</div>
+					<div class='sidebar-link-text'>
+						<span>Overview</span>
+					</div>
+				</div>
+				<div class='sidebar-link' data-target="invoice.html">
+					<div class='sidebar-link-icon'>
+						<i class="material-icons">receipt</i>
+					</div>
+					<div class='sidebar-link-text'>
+						<span>Charges</span>
+					</div>
+				</div>
+				<div class='sidebar-link' data-target="schedule.html">
+					<div class='sidebar-link-icon'>
+						<i class="material-icons">calendar_today</i>
+					</div>
+					<div class='sidebar-link-text'>
+						<span>Schedule</span>
+					</div>
+				</div>
+				<div class='sidebar-link' data-target="customers.html">
+					<div class='sidebar-link-icon'>
+						<i class="material-icons">person</i>
+					</div>
+					<div class='sidebar-link-text'>
+						<span>Users</span>
+					</div>
+				</div>
+
+				<!-- Services -->
+				<div class='sidebar-link-subtitle'>
+					<span>Available Tools</span>
+				</div>
+				<div class='sidebar-link no-margin' id='sidebar-forms'>
+					<div class='sidebar-link-icon'>
+						<i class="material-icons">assignment</i>
+					</div>
+					<div class='sidebar-link-text'>
+						<span>Forms</span>
+					</div>
+				</div>
+				<div class='sidebar-link no-margin' id='sidebar-data'>
+					<div class='sidebar-link-icon'>
+						<i class="material-icons">import_export</i>
+					</div>
+					<div class='sidebar-link-text'>
+						<span>Data</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- Accounts -->
+			<div class='sidebar-bottom'>
+				<div class='sidebar-account-icon' style='margin-left: 0;'>
+					<img src='https://via.placeholder.com/64x64' />
+				</div>
+				<div class='sidebar-account-line'></div>
+				<div class='sidebar-account-icon' id='sidebar-account-icon' style='cursor: pointer;display: flex;align-items: center;margin-right: auto'>
+					<img src='https://via.placeholder.com/64x64' />
+					<div class='sidebar-account-details'>
+						<div class='sidebar-account-name'>Tester E. Testimony</div>
+						<div class='sidebar-account-title'>Employee</div>
+					</div>
+					<div class='sidebar-account-tabs' id='sidebar-account-tabs'>
+						<div class='sidebar-account-tab' id='sidebar-account-settings'>Account Settings</div>
+						<!--<div class='sidebar-account-tab'>User Settings</div>-->
+						<!--<div class='sidebar-account-tab'>Help</div>-->
+						<div class='sidebar-account-tab' id='sidebar-refresh'>Refresh</div>
+						<div class='sidebar-account-tab-line'></div>
+						<div class='sidebar-account-tab' id='sidebar-logout'>Logout</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Toggled -->
+			<div class='sidebar-menu' id='sidebar-menu'>
+				<div class='menu-top'>
+					<div class='menu-top-logo'>
+						<h3 id='sidebar-menu-title'></h3>
+					</div>
+					<div class='menu-top-text'>
+						<span id='sidebar-menu-subtitle'></span>
+					</div>
+					<div class='menu-top-line'></div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+		document.getElementById('sidebar-menu-back').onclick = function() {
+			this.parentElement.parentElement.classList.remove('menu-toggled');
+		};
+		document.getElementById('sidebar-account-icon').onclick = function() {
+			document.getElementById('sidebar-account-tabs').classList.toggle('active');
+		}
+		document.getElementById('sidebar-account-tabs').onclick = function(e) {
+			e.stopPropagation();
+		}
+		document.getElementById('sidebar-forms').onclick = function() {
+			showSidebarMenu("Forms", "Print, View, Export Forms", Array(
+				{
+					title: "Customer Form",
+					callback: function() {
+						
+					}
+				},
+				{
+					title: "Vehicle Form",
+					callback: function() {
+
+					}
+				},
+				{
+					title: "Credit Card Form",
+					callback: function() {
+
+					}
+				}
+			));
+		}
+		document.getElementById('sidebar-data').onclick = function() {
+			showSidebarMenu("Data Manager", "Import & Export Data", Array(
+				{
+					title: "Import Appointments",
+					callback: function() {
+
+					}
+				},
+				{
+					title: "Export Addresses",
+					callback: function() {
+
+					}
+				}
+			));
+		}
+
+		// FUNCTIONS
+		function showSidebarMenu(title, subtitle, options) {
+			// Checks
+			if (typeof(title) !== "string" || title.trim().length <= 0) { return false }
+			if (typeof(subtitle) !== "string" || subtitle.trim().length <= 0) { return false }
+			if (typeof(options) !== "object" || Object.keys(options).length <= 0) { return false }
+			if (document.querySelectorAll('.sidebar-menu .menu-link') && document.querySelectorAll('.sidebar-menu .menu-link').length > 0) {
+				document.querySelectorAll('.sidebar-menu .menu-link').forEach(function(e) {e.outerHTML = ''});
+			}
+
+			// Variables
+			let fragment = document.createDocumentFragment();
+
+			// Loop
+			for (let i = 0; i < Object.keys(options).length; i++) {
+				// Variables
+				let option = options[Object.keys(options)[i]];
+				let div = document.createElement('div');
+
+				// Attributes
+				div.classList.add('menu-link');
+				div.innerHTML = `<div class='sidebar-link-text'><span>${typeof(option.title) === "string" ? option.title.trim() : ""}</span></div>`;
+				div.onclick = function() {
+					if (typeof(option.callback) === "function") { option.callback() }
+
+					// Return
+					document.getElementById('sidebar').classList.remove('menu-toggled');
+				}
+
+				// Append
+				fragment.appendChild(div);
+			}
+
+			// UI
+			document.getElementById('sidebar-menu-title').innerText = title.trim().substr(0,25);
+			document.getElementById('sidebar-menu-subtitle').innerText = subtitle.trim().substr(0,25);
+			document.getElementById('sidebar-menu').appendChild(fragment);
+			document.getElementById('sidebar').classList.add('menu-toggled');
+		}
+		</script>
+	</body>
+</html>
